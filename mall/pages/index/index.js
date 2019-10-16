@@ -14,8 +14,8 @@ Page({
 
     indicatorDots: true,
     autoplay: true,
-    interval: 3000,
-    duration: 1000,
+    interval: 5000,
+    duration: 2000,
     loadingHidden: false, // loading
     userInfo: {},
     swiperCurrent: 0,

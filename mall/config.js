@@ -1,10 +1,10 @@
 module.exports = {
   version: "6.12.1",
   note: '订单支付防止重复点击',
-  subDomain: "tz", // https://admin.it120.cc 登录后台首页的专属域名
-  appid: "wx12af66d2ed28de2a", // 您的小程序的appid，购物单功能需要使用
+  subDomain: "liuguilian", // https://admin.it120.cc 登录后台首页的专属域名
+  appid: "wx6ddfbcdabb66196d", // 您的小程序的appid，购物单功能需要使用
   shareProfile: '农家美味食品，健康绿色的水果', // 首页转发的时候话术
-  requireBindMobile: true, // 是否强制绑定手机号码才能使用
+  requireBindMobile: false, // 是否强制绑定手机号码才能使用
   kanjiaRequirePlayAd: false // 是否必须要观看视频广告后才可以砍价
 }
 /*

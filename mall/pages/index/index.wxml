@@ -60,7 +60,7 @@
     </scroll-view>
   </view>
   <view class="swiper-container">
-    <swiper class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+    <swiper class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" circular="true" duration="{{duration}}" bindchange="swiperchange">
       <block wx:for="{{banners}}" wx:key="id">
         <swiper-item>
           <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="562.5rpx" />
@@ -88,7 +88,6 @@
       </view>
     </view>
   </view>
-  <ad unit-id="adunit-588264b3e2362e1e"></ad>
   <view wx-if="{{kanjiaList.length > 0 && activeCategoryId == 0}}" class="weui-panel weui-panel_access" style='margin-top:0px;'>
     <view class="weui-panel__hd">疯狂砍价</view>
     <view class="weui-panel__bd">
