@@ -59,7 +59,7 @@ Page({
   aboutUs : function () {
     wx.showModal({
       title: '关于我们',
-      content: '本系统基于开源小程序商城系统 https://github.com/EastWorld/wechat-app-mall 搭建，祝大家使用愉快！',
+      content: '本店铺是，由江西深山的农产品直销店家',
       showCancel:false
     })
   },
