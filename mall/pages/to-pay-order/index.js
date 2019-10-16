@@ -70,6 +70,7 @@ Page({
         });
       }
     }
+    console.log(allowSelfCollection)
     that.setData({
       goodsList: shopList,
       allowSelfCollection: allowSelfCollection,

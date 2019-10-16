@@ -69,5 +69,6 @@ page {
   flex-direction: column;
   padding: 0px 5px 0px 5px;
   height: 80px;
+  font-size: 14px;
   justify-content: space-between;
 }
