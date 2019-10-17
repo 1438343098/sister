@@ -123,11 +123,9 @@ Page({
       if (res.code == 0) {
         categories = categories.concat(res.data)
       }
-      const _n = Math.ceil(categories.length / 2)
       // const _n = Math.ceil(categories.length)
       that.setData({
         categories: categories,
-        category_box_width: 187.5 * _n,
         activeCategoryId: 0,
         curPage: 1
       });

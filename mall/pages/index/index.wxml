@@ -39,19 +39,19 @@
       </navigator>
     </view> -->
     <view class="swiper-container">
-    <swiper class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" circular="true" duration="{{duration}}" bindchange="swiperchange">
-      <block wx:for="{{banners}}" wx:key="id">
-        <swiper-item>
-          <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="562.5rpx" />
-        </swiper-item>
-      </block>
-    </swiper>
-    <view class="dots">
-      <block wx:for="{{banners}}" wx:key="unique">
-        <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
-      </block>
+      <swiper class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" circular="true" duration="{{duration}}" bindchange="swiperchange">
+        <block wx:for="{{banners}}" wx:key="id">
+          <swiper-item>
+            <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="562.5rpx" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="dots">
+        <block wx:for="{{banners}}" wx:key="unique">
+          <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
+        </block>
+      </view>
     </view>
-  </view>
     <view wx:if="{{noticeList}}" class="notice">
       <image class="notice_icon" src="/images/notice.png"></image>
       <swiper wx:if="{{noticeList}}" class="notice_swiper" vertical="true" autoplay="true" circular="true" interval="3000">
@@ -64,16 +64,57 @@
     </view>
     <scroll-view scroll-x>
       <view class="category-box" style='width:{{category_box_width}}rpx;'>
-        <view class="category-list" wx:for="{{categories}}" wx:key="*this">
+        <view class="category-list" wx:for="{{categories}}" wx:key="*this" wx:if='{{index < 4}}'>
           <view class="category-column {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick" id="{{item.id}}">
             <image class="category-imgbox" src="{{item.icon}}"></image>
             <view class="category-title">{{item.name}}</view>
-          </view>          
+          </view>
         </view>
+      </view>
+      <view class="category-box" style='width:{{category_box_width}}rpx;'>
+        <view class="category-list">
+          <navigator wx:if="{{!apiUserInfoMap.base.isSeller}}" url="/pages/fx/apply-status" hover-class="navigator-hover">
+            <view class="category-column">
+              <image class="category-imgbox" src="https://dcdn.it120.cc/2019/10/17/11b0d800-54e3-4589-be21-cdd2a0d7d00a.png"></image>
+              <view class="category-title">分销</view>
+            </view>
+          </navigator>
+          <navigator wx:if="{{apiUserInfoMap.base.isSeller}}" url="/pages/fx/apply-status" hover-class="navigator-hover">
+            <view class="category-column">
+              <image class="category-imgbox" src="https://dcdn.it120.cc/2019/10/17/11b0d800-54e3-4589-be21-cdd2a0d7d00a.png"></image>
+              <view class="category-title">分销</view>
+            </view>
+          </navigator>
+        </view>
+        <view class="category-list">
+          <navigator url="/pages/asset/index" hover-class="navigator-hover">
+            <view class="category-column">
+              <image class="category-imgbox" src="https://dcdn.it120.cc/2019/10/17/9dbc9241-cb9d-4137-89e8-9013868eb89f.png"></image>
+              <view class="category-title">资产</view>
+            </view>
+          </navigator>
+        </view>
+        <view class="category-list">
+          <navigator url="/pages/sign/index" hover-class="navigator-hover">
+            <view class="category-column">
+              <image class="category-imgbox" src="https://dcdn.it120.cc/2019/10/17/a07ed254-a2a0-415f-bf41-4ec693b07899.png"></image>
+              <view class="category-title">签到</view>
+            </view>
+          </navigator>
+        </view>
+        <view class="category-list">
+          <navigator url="/pages/order-list/index" hover-class="navigator-hover">
+            <view class="category-column">
+              <image class="category-imgbox" src="https://dcdn.it120.cc/2019/10/17/8f07fb65-aaf3-484b-94ed-9c2dc6b850f1.png"></image>
+              <view class="category-title">订单</view>
+            </view>
+          </navigator>
+        </view>
+
       </view>
     </scroll-view>
   </view>
-  
+
   <view class="weui-loadmore weui-loadmore_line" wx:if="{{goodsRecommend.length > 0 && activeCategoryId == 0}}">
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">爆品推荐</view>
   </view>
