@@ -129,7 +129,7 @@ Page({
         })
         ctx = wx.createCanvasContext('firstCanvas')
         //白色背景
-        ctx.drawImage("https://dcdn.it120.cc/2019/10/17/eeb99e87-4c20-4aec-9d04-27dfcf963e43.jpg", (imageSize.windowWidth - qrcodeWidth) / 2, 0, qrcodeWidth, qrcodeWidth)
+        ctx.drawImage("../../images/BGss.jpg", (imageSize.windowWidth - qrcodeWidth) / 2, 0, qrcodeWidth, qrcodeWidth)
         ctx.drawImage(res.path, (imageSize.windowWidth - qrcodeWidth) / 2, 0, qrcodeWidth, qrcodeWidth)
         setTimeout(function () {
           wx.hideLoading()
