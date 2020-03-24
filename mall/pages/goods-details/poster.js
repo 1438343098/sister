@@ -38,6 +38,7 @@ Page({
       title: '合成中...',
     })
     const goodsDetailRes = await WXAPI.goodsDetail(this.data.goodsid)
+    console.log(goodsDetailRes,888)
     this.data.pic = goodsDetailRes.data.basicInfo.pic
     this.data.name = goodsDetailRes.data.basicInfo.name
     this.downLoadGoodsPic()
@@ -47,25 +48,24 @@ Page({
     wx.getImageInfo({
       src: _this.data.pic,
       success: (res) => {
-        let imageSize = imageUtil(res.width, res.height)
-        const additionHeight = 300
+        let imageSize = imageUtil(res.width, res.height-100)
+        const additionHeight = 200
         _this.setData({
           canvasstyle: 'height:' + (imageSize.imageHeight + additionHeight) + 'px'
         })
         ctx = wx.createCanvasContext('firstCanvas')
         ctx.setFillStyle('#fff')
-        ctx.fillRect(0, 0, imageSize.windowWidth, imageSize.imageHeight + additionHeight)
+        ctx.fillRect(0, 0, imageSize.windowWidth, imageSize.imageHeight)
         ctx.drawImage(res.path, imageSize.x, imageSize.y, imageSize.imageWidth, imageSize.imageHeight)
 
         ctx.setFontSize(16)
         ctx.setFillStyle('#e64340')
         ctx.setTextAlign('left')
         let name = _this.data.name
-        ctx.fillText(name, 10, imageSize.imageHeight + 30)
-
-        ctx.moveTo(10, imageSize.imageHeight + 50)
+        ctx.font="14px Arial"
+        ctx.fillText(name, 10, imageSize.imageHeight+30)
         ctx.setLineWidth(1)
-        ctx.lineTo(imageSize.windowWidth - 10, imageSize.imageHeight + 50)
+        ctx.lineTo(imageSize.windowWidth - 10, imageSize.imageHeight - 100)
         ctx.setStrokeStyle('#eee')
         ctx.stroke()
 
@@ -93,12 +93,12 @@ Page({
           src: imageUrl,
           success: (res) => {
             let left = _imageSize.windowWidth / 3
-            ctx.drawImage(res.path, left, _imageSize.imageHeight + 80, _imageSize.windowWidth / 3, _imageSize.windowWidth / 3)
+            ctx.drawImage(res.path, left, _imageSize.imageHeight+40 , _imageSize.windowWidth / 3, _imageSize.windowWidth / 3)
             
             ctx.setFontSize(12)
             ctx.setFillStyle('#e64340')
             ctx.setTextAlign('center')
-            ctx.fillText('长按识别小程序码 即可买买买~', _imageSize.windowWidth / 2, _imageSize.imageHeight + 80 + left + 50)
+            ctx.fillText('长按识别小程序码 即可买买买~', _imageSize.windowWidth / 2, _imageSize.imageHeight+10+ left + 50)
 
             setTimeout(function () {
               wx.hideLoading()

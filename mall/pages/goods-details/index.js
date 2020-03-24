@@ -501,9 +501,32 @@ Page({
     return buyNowInfo;
   },
   onShareAppMessage: function() {
+    console.log(this.data,8888)
+    let title = "【¥"+this.data.selectSizePrice+"】"+this.data.goodsDetail.basicInfo.name
+    if(this.data.goodsDetail.properties){
+      title = "【¥"+this.data.selectSizePrice+"】"+this.data.goodsDetail.properties[0].childsCurGoods[0].name+this.data.goodsDetail.basicInfo.name
+    }
+    // wx.getImageInfo({
+    //   src: this.data.goodsDetail.pics[0].pic,
+    //   success: (res) => {
+    //     let left = _imageSize.windowWidth / 3
+    //     ctx.drawImage(res.path, left, _imageSize.imageHeight+40 , _imageSize.windowWidth / 3, _imageSize.windowWidth / 3)
+        
+    //     ctx.setFontSize(12)
+    //     ctx.setFillStyle('#e64340')
+    //     ctx.setTextAlign('center')
+    //     ctx.fillText('长按识别小程序码 即可买买买~', _imageSize.windowWidth / 2, _imageSize.imageHeight+10+ left + 50)
+
+    //     setTimeout(function () {
+    //       wx.hideLoading()
+    //       ctx.draw()
+    //     }, 1000)
+    //   },fail
+    // })
     let _data = {
-      title: this.data.goodsDetail.basicInfo.name,
+      title: title,
       path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
+      imageUrl:this.data.goodsDetail.pics[0].pic,
       success: function(res) {
         // 转发成功
       },
@@ -515,6 +538,7 @@ Page({
       _data.title = this.data.curKanjiaprogress.joiner.nick + '邀请您帮TA砍价'
       _data.path += '&kjJoinUid=' + this.data.kjJoinUid
     }
+    
     return _data
   },
   reputation: function(goodsId) {
