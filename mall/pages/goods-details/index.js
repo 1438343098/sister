@@ -4,11 +4,14 @@ const WxParse = require('../../wxParse/wxParse.js');
 const CONFIG = require('../../config.js')
 const AUTH = require('../../utils/auth')
 const SelectSizePrefix = "选择："
-
+import imageUtil from '../../utils/image'
+let ctx;
 let videoAd = null; // 视频激励广告
 
 Page({
   data: {
+    canvasstyle:undefined,
+    fxPath:undefined,
     autoplay: true,
     interval: 3000,
     duration: 1000,
@@ -83,9 +86,11 @@ Page({
         }
       })
     }
+   
   },
   onShow (){
     this.getGoodsDetailAndKanjieInfo(this.data.goodsId)
+     
   },
   async getGoodsDetailAndKanjieInfo(goodsId) {
     const that = this;
@@ -143,6 +148,32 @@ Page({
       }
       that.setData(_data);
       WxParse.wxParse('article', 'html', goodsDetailRes.data.content, that, 5);
+      // 在这里处理图片
+      let title = "【¥"+this.data.selectSizePrice+"】"
+      if(this.data.goodsDetail.properties){
+        title = "【¥"+this.data.selectSizePrice+"】"+this.data.goodsDetail.properties[0].childsCurGoods[0].name
+      }
+     wx.getImageInfo({
+      src: this.data.goodsDetail.pics[0].pic,
+      success: (res) => {
+        console.log(res)        
+        let imageSize = imageUtil(res.width, res.height-100)
+        this.setData({
+          canvasstyle: 'height: 750 px'
+        })
+        ctx = wx.createCanvasContext('fxCanvas')
+        ctx.setFillStyle('#fff')
+        ctx.fillRect(0, 0, imageSize.windowWidth, imageSize.imageHeight)
+        ctx.drawImage(res.path, imageSize.x, imageSize.y,375, 325)
+        ctx.drawImage("/images/acc.jpg", 0, 267,375, 50)
+        ctx.setFontSize(24)
+        ctx.setFillStyle('#e64340')
+        ctx.fillText(title, 10, 300)
+        setTimeout(function () {
+          ctx.draw()
+        }, 500)
+      }
+    })
     }
   },
   goShopCar: function() {
@@ -501,32 +532,16 @@ Page({
     return buyNowInfo;
   },
   onShareAppMessage: function() {
-    console.log(this.data,8888)
+   
     let title = "【¥"+this.data.selectSizePrice+"】"+this.data.goodsDetail.basicInfo.name
     if(this.data.goodsDetail.properties){
       title = "【¥"+this.data.selectSizePrice+"】"+this.data.goodsDetail.properties[0].childsCurGoods[0].name+this.data.goodsDetail.basicInfo.name
     }
-    // wx.getImageInfo({
-    //   src: this.data.goodsDetail.pics[0].pic,
-    //   success: (res) => {
-    //     let left = _imageSize.windowWidth / 3
-    //     ctx.drawImage(res.path, left, _imageSize.imageHeight+40 , _imageSize.windowWidth / 3, _imageSize.windowWidth / 3)
-        
-    //     ctx.setFontSize(12)
-    //     ctx.setFillStyle('#e64340')
-    //     ctx.setTextAlign('center')
-    //     ctx.fillText('长按识别小程序码 即可买买买~', _imageSize.windowWidth / 2, _imageSize.imageHeight+10+ left + 50)
-
-    //     setTimeout(function () {
-    //       wx.hideLoading()
-    //       ctx.draw()
-    //     }, 1000)
-    //   },fail
-    // })
+    
     let _data = {
       title: title,
       path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
-      imageUrl:this.data.goodsDetail.pics[0].pic,
+      imageUrl:this.data.fxPath,
       success: function(res) {
         // 转发成功
       },
@@ -674,6 +689,19 @@ Page({
     })
   },
   openShareDiv () {
+    let that = this
+    wx.canvasToTempFilePath({
+      canvasId: 'fxCanvas',
+      success: function (res) {
+        that.setData({
+          fxPath: res.tempFilePath
+        })
+      },
+     
+      complete:()=>{
+        console.log(55555)
+      }
+      })
     this.setData({
       openShare: true
     })

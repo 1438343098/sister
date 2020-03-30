@@ -1,5 +1,6 @@
 <import src="../../wxParse/wxParse.wxml" />
 <view class="container">
+  <canvas class="canvas"  canvas-id="fxCanvas"></canvas>
   <view class="swiper-container" wx:if="{{!goodsDetail.basicInfo.videoId}}">
     <swiper class="swiper_box" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
       <block wx:for="{{goodsDetail.pics}}" wx:key="id">
@@ -263,5 +264,6 @@
     </view>
   </view>
   <view class="p2"></view>
+
   <view class="p3" bindtap="closeShareDiv"> 取消分享 </view>
 </view>
